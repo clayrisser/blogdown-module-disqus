@@ -95,7 +95,7 @@ gulp.task('serve', async (cb) => {
       console.log('Listening at http://localhost:8081');
     }, 2000);
     childProcess.spawn(`docker run --name some-blogdown --rm -p 8081:8081 \
--v ${path.resolve(__dirname)}/src/:/app/content/themes/some-theme \
+-v ${path.resolve(__dirname)}/src/:/app/content/modules/some-module \
       thingdown/blogdown:latest`, {
         stdio: 'inherit',
         shell: true

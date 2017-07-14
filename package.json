@@ -28,7 +28,8 @@
     "copy": "node ./node_modules/gulp/bin/gulp copy",
     "build": "node ./node_modules/gulp/bin/gulp",
     "vulcanize": "node ./node_modules/gulp/bin/gulp vulcanize",
-    "babel": "node ./node_modules/gulp/bin/gulp babel"
+    "babel": "node ./node_modules/gulp/bin/gulp babel",
+    "essh": "docker exec -it some-blogdown /bin/sh"
   },
   "babel": {
     "presets": [
