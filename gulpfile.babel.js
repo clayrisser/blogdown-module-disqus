@@ -25,7 +25,7 @@ gulp.task('babel', () => {
   return new Promise((resolve, reject) => {
     gulp.src([
       './src/**/*.{js,html}',
-      '!./bower_components/**/*'
+      '!./src/bower_components/**/*'
     ]).pipe($.if('*.html', $.crisper({})))
     // .pipe($.if('*.js', $.eslint()))
     // .pipe($.if('*.js', $.eslint.format()))
