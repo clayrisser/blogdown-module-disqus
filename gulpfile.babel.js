@@ -7,8 +7,10 @@ import path from 'path';
 import runSequence from 'run-sequence';
 import childProcess from 'child_process';
 import delay from 'delay';
+import pjson from './package.json';
 
 const $ = gulpLoadPlugins();
+const moduleName = pjson.name.substr(16);
 let NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'production';
 NODE_ENV = process.argv.includes('--dev') ? 'development' : NODE_ENV;
 
@@ -95,7 +97,7 @@ gulp.task('serve', async (cb) => {
       console.log('Listening at http://localhost:8081');
     }, 2000);
     childProcess.spawn(`docker run --name some-blogdown --rm -p 8081:8081 \
--v ${path.resolve(__dirname)}/src/:/app/content/modules/some-module \
+-v ${path.resolve(__dirname)}/src/:/app/content/modules/${moduleName} \
       thingdown/blogdown:latest`, {
         stdio: 'inherit',
         shell: true
@@ -103,8 +105,8 @@ gulp.task('serve', async (cb) => {
   });
   return new Promise(async (resolve, reject) => {
     await delay(1000);
-    childProcess.spawn(`docker cp ${path.resolve(__dirname)}/settings.json \
-      some-blogdown:/app/content/settings.json`, {
+    childProcess.spawn(`docker cp ${path.resolve(__dirname, './content/')}/. \
+      some-blogdown:/app/content/`, {
         stdio: 'inherit',
         shell: true
       }).on('close', resolve).on('error', reject);
