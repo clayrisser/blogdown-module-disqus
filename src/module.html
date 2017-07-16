@@ -1,9 +1,11 @@
 <dom-module name="mod-disqus">
   <template>
 
-    <div id="disqus" hidden="[[!loaded]]">
-      <div id="disqus_thread"></div>
-    </div>
+    <template is="dom-if" if="[[post]]">
+      <div id="disqus" hidden="[[!loaded]]">
+        <div id="disqus_thread"></div>
+      </div>
+    </template>
 
   </template>
   <script>
