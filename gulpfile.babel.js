@@ -91,7 +91,8 @@ gulp.task('clean', () => {
     .pipe($.clean());
 });
 
-gulp.task('serve', async (cb) => {
+gulp.task('serve', ['vulcanize'], async (cb) => {
+  gulp.watch('src/**/*', ['vulcanize']);
   new Promise((resolve, reject) => {
     setTimeout(() => {
       console.log('Listening at http://localhost:8081');

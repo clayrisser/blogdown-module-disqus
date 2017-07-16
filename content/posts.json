@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Post1",
+    "date": "2017-07-16",
+    "author": "jamrizzi",
+    "featuredImage": false
+  },
+  {
+    "title": "Post2",
+    "date": "2017-07-15",
+    "author": "jamrizzi",
+    "featuredImage": false
+  }
+]

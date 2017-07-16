@@ -1,7 +1,9 @@
 <dom-module name="mod-disqus">
   <template>
 
-    Hello blogdown
+    <div id="disqus" hidden="[[!loaded]]">
+      <div id="disqus_thread"></div>
+    </div>
 
   </template>
   <script>
@@ -10,12 +12,80 @@
         this.is = 'mod-disqus';
 
         this.properties = {
-
+          post: {
+            type: Object
+          }
         };
       }
 
-      ready() {
-        console.log('module is ready');
+      ready () {
+        this.set('moduleSettings', app.getModuleSettings(this.is));
+      }
+
+      attached() {
+        const page = this.generatePage();
+        if (!window.disqus_config) {
+          window.disqus_config = function() {
+            this.page = page;
+          }
+          this.injectScript().then(() => {
+            window.DISQUS.reset({
+              reload: true,
+              config: function() {
+                this.page = page;
+              }
+            });
+            this.set('loaded', true);
+          }).catch(err => app.handleError);
+        } else {
+          window.DISQUS.reset({
+            reload: true,
+            config: function() {
+              this.page = page;
+            }
+          });
+          window.DISQUS.reset({
+            reload: true,
+            config: function() {
+              this.page = page;
+            }
+          });
+          this.set('loaded', true);
+        }
+      }
+
+      injectScript() {
+        const protocol = this.https ? 'https' : 'http';
+        const src = protocol + '://' + this.moduleSettings.shortname + '.disqus.com';
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.async = true;
+          script.src = src + '/embed.js';
+          script.dataTimestamp = new Date();
+          script.onload = resolve;
+          script.onerror = reject;
+          (document.head || document.body).appendChild(script);
+        }).then(() => {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.async = true;
+            script.src = src + '/count.js';
+            script.onload = resolve;
+            script.onerror = reject;
+            (document.head || document.body).appendChild(script);
+          });
+        });
+      }
+
+      generatePage() {
+        return {
+          identifier: this.identifier || (this.post.taxonomy.name + this.post.slug.replace('-', '')),
+          title: this.title || (this.post.title ? this.post.title : ''),
+          url: this.url || window.location.href,
+          category_id: this.category || ''
+        };
       }
     }
     Polymer(ModDisqus);

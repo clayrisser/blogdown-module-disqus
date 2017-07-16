@@ -2,14 +2,6 @@
   {
     "slug": "home",
     "addToMenu": false,
-    "format": "dyn",
-    "featuredImage": "screenshot-1"
-  },
-  {
-    "title": "Module Demo",
-    "slug": "module-demo",
-    "addToMenu": true,
-    "format": "html",
-    "display": "theme"
+    "featuredImage": false
   }
 ]
