@@ -23,8 +23,8 @@
       }
 
       attached() {
-        const page = this.generatePage();
         if (!this.post) return;
+        const page = this.generatePage();
         if (!window.disqus_config) {
           window.disqus_config = function() {
             this.page = page;
