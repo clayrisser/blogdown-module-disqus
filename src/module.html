@@ -24,6 +24,7 @@
 
       attached() {
         const page = this.generatePage();
+        if (!this.post) return;
         if (!window.disqus_config) {
           window.disqus_config = function() {
             this.page = page;
